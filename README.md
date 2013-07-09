@@ -27,6 +27,15 @@ dependencies fairly seemlessly.
 
 Wheeljack expects you to use a `virtualenv`.
 
+## repos.conf
+
+This is a `yaml` file which lists repositories in Github or Github Enterprise.
+
+There are two main parts of the config.  `global` which applies to all `repos`
+and `repos` which define individual repositories.
+
+See `example.conf`.
+
 ## TODO
 
 * `install-repo` will install a repo from a repos.conf file to
