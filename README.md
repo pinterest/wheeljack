@@ -36,11 +36,14 @@ and `repos` which define individual repositories.
 
 See `example.conf`.
 
+## install-repo
+
+`install-repo` will install a repo from a repos.conf file to `$WHEELJACK_CODE`.
+
 ## TODO
 
-* `install-repo` will install a repo from a repos.conf file to
-  `$WHEELJACK_CODE`
 * `update-libs` will update the current virtualenv:
   * It will `git fetch origin/master` on any repos in `$WHEELJACK_CODE`
   * It will `pip install -r $WHEELJACK_CODE/**/requirements.txt` for every
-    installed requirement,
+    installed requirement.
+* Work with multiple python `virutalenv`s.
