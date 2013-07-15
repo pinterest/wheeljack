@@ -2,10 +2,11 @@
 import sys
 
 from wheeljack.config import list_repos
+from wheeljack.install import install_repo
 
 
 def main():
-    if len(sys.argv) != 1:
+    if len(sys.argv) != 2:
         repos = list_repos()
         sys.stderr.write('Available repositories to install: \n')
         for repo in repos:
@@ -13,6 +14,9 @@ def main():
 
         sys.stderr.write('\nExample: {} {}\n'.format(sys.argv[0], repos[0]))
         exit(1)
+
+    install_repo(sys.argv[1])
+
 
 if __name__ == '__main__':
     main()

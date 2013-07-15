@@ -1,4 +1,6 @@
 PyYAML==3.10
+blessings==1.5
+nuggets==0.2
 
 # testing
 nose==1.3.0

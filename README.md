@@ -39,8 +39,8 @@ See `example.conf`.
 ## TODO
 
 * `install-repo` will install a repo from a repos.conf file to
-  `$WHEELJACK_REPO`
+  `$WHEELJACK_CODE`
 * `update-libs` will update the current virtualenv:
-  * It will `git fetch origin/master` on any repos in `$WHEELJACK_REPO`
-  * It will `pip install -r $WHEELJACK_REPO/**/requirements.txt` for every
+  * It will `git fetch origin/master` on any repos in `$WHEELJACK_CODE`
+  * It will `pip install -r $WHEELJACK_CODE/**/requirements.txt` for every
     installed requirement,
