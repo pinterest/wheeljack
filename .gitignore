@@ -1,2 +1,4 @@
 .idea
 *.pyc
+wheeljack.egg-info/
+dist/
