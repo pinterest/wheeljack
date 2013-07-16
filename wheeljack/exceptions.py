@@ -23,3 +23,12 @@ class ReposConfigException(WheeljackException):
 class WheeljackCodeDirectoryMissing(WheeljackException):
     """Raised if we are missing our base directory."""
     pass
+
+
+class GitNotRepoException(WheeljackException):
+    """Raise if we interact with a non Git-dir in a Git-ish manner."""
+    pass
+
+
+class GitNoOriginRemoteException(WheeljackException):
+    pass
