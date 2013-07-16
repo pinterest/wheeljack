@@ -39,6 +39,7 @@ See `example.conf`.
 ## install-repo
 
 `install-repo` will install a repo from a repos.conf file to `$WHEELJACK_CODE`.
+We'll instruct the user to use the `hub` command to fork this repo.
 
 ## TODO
 

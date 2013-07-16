@@ -1,3 +1,5 @@
+import shutil
+import tempfile
 import unittest
 from wheeljack.config import _clear_cache
 
@@ -15,3 +17,7 @@ repos:
 class TestCase(unittest.TestCase):
     def setUp(self):
         _clear_cache()
+        self.tmp_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp_dir)
