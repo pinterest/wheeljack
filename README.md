@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pinterest/wheeljack.png?branch=master)](https://travis-ci.org/pinterest/wheeljack)
+
 # Wheeljack
 
 Wheeljack helps manage dependent python projects.  All related projects will
