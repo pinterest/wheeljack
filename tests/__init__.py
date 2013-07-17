@@ -1,3 +1,4 @@
+import os
 import shutil
 import tempfile
 import unittest
@@ -21,3 +22,5 @@ class TestCase(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.tmp_dir)
+        if 'WHEELJACK_CODE' in os.environ:
+            del os.environ['WHEELJACK_CODE']
