@@ -6,7 +6,7 @@ markdown_contents = open(os.path.join(os.path.dirname(__file__),
                                       'README.md')).read()
 
 setup(
-    name='wheeljack',
+    name='wheeljack-repoman',
     version= __version__,
     scripts=['bin/{}'.format(p) for p in os.listdir('bin')],
     long_description=markdown_contents,
