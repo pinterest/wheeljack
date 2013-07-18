@@ -77,7 +77,7 @@ def _create_pth(dir_):
                             shortname + '.pth')
     lines = [dir_, "# {} should come before pip'd packages".format(shortname),
              'import sys;sys.path.insert(0, sys.path.pop(-1));']
-    with file(pth_file, 'w') as f:
+    with open(pth_file, 'w') as f:
         f.writelines((line + "\n" for line in lines))
 
 

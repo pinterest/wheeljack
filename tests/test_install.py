@@ -88,7 +88,7 @@ class CreatePthTestCase(TestCase):
         destination = '.venv/lib/python2.7/site-packages/foo.pth'
         ok_(os.path.exists(os.path.join(self.tmp_dir, destination)),
             ".pth file not created in {}".format(destination))
-        with file(os.path.join(self.tmp_dir, destination)) as f:
+        with open(os.path.join(self.tmp_dir, destination)) as f:
             expect = 3
             reality = len(f.readlines())
             eq_(expect, reality,
