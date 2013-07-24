@@ -22,7 +22,12 @@ def __git_command(url):
     Returns newly created directory.
     """
     dir_ = get_code_dir(url)
-    subprocess.check_call(('git', 'clone', url, dir_))
+    args = ('git', 'clone', url, dir_)
+    try:
+        subprocess.check_call(args)
+    except subprocess.CalledProcessError:
+        cmd = ' '.join(args)
+        exit("I had trouble calling the following command:\n    {}".format(cmd))
     return dir_
 
 
@@ -36,6 +41,7 @@ def _install_repo(repo, config=None, git_command=None):
 
     if not git_command:
         git_command = __git_command
+
 
     url = data['url']
     code_dir = get_code_dir(url)
