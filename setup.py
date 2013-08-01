@@ -1,7 +1,7 @@
 from setuptools import setup
 import os
 
-__version__ = '0.2'
+__version__ = '0.3'
 markdown_contents = open(os.path.join(os.path.dirname(__file__),
                                       'README.md')).read()
 
