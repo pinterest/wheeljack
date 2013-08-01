@@ -89,8 +89,12 @@ def _create_pth(dir_):
 
 def install_repo(repo, config=None, git_command=None):
     try:
-        dir_ = _install_repo(repo, config, git_command)
-        _fork_and_add_remote(dir_)
+        try:
+            dir_ = _install_repo(repo, config, git_command)
+            _fork_and_add_remote(dir_)
+        except RepoAlreadyInstalledException as e:
+            print "{t.yellow}{}{t.normal}".format(e.message, t=terminal)
+
         _create_pth(dir_)
         os.chdir(dir_)
         return dir_
@@ -109,8 +113,6 @@ def install_repo(repo, config=None, git_command=None):
         print INDENT, "export WHEELJACK_CODE={directory}"
         exit(1)
 
-    except RepoAlreadyInstalledException as e:
-        print "{t.yellow}{}{t.normal}".format(e.message, t=terminal)
 
 
 def _get_code_base_dir():
