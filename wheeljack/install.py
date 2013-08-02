@@ -21,7 +21,7 @@ def __git_command(url):
 
     Returns newly created directory.
     """
-    dir_ = get_code_dir(url)
+    dir_ = _get_code_dir_from_url(url)
     args = ('git', 'clone', url, dir_)
     try:
         subprocess.check_call(args)
@@ -31,20 +31,22 @@ def __git_command(url):
     return dir_
 
 
-def _install_repo(repo, config=None, git_command=None):
+def _get_code_dir_url(repo, config):
     repos = list_repos(config)
-    config = get_config(config)
     if repo not in repos:
         raise RepoNotFoundException
-
     data = config['repos'][repo]
+    url = data['url']
+    code_dir = _get_code_dir_from_url(url)
+    return code_dir, url
+
+
+def _install_repo(repo, config=None, git_command=None):
+    code_dir, url = _get_code_dir_url(repo, config)
 
     if not git_command:
         git_command = __git_command
 
-
-    url = data['url']
-    code_dir = get_code_dir(url)
     if os.path.exists(code_dir):
         raise RepoAlreadyInstalledException(
             "Something already exists in {}.  "
@@ -70,14 +72,13 @@ def _get_venv_or_create():
     """Creates a virtualenv or returns an existing one."""
     venv_path = os.path.join(_get_code_base_dir(), '.venv')
     if not os.path.exists(venv_path):
-        subprocess.check_call(('virtualenv', venv_path))
+        subprocess.check_call(('/usr/local/bin/virtualenv', '-q', venv_path))
     return venv_path
 
 
 def _create_pth(dir_):
     """Create a pth file which links the virtualenv to this new package."""
     venv = _get_venv_or_create()
-    # TODO: Make this not Python 2.7 dependent.
     shortname = os.path.basename(dir_)
     pth_file = os.path.join(venv, 'lib/python2.7/site-packages',
                             shortname + '.pth')
@@ -89,11 +90,13 @@ def _create_pth(dir_):
 
 def install_repo(repo, config=None, git_command=None):
     try:
+        dir_, _ = _get_code_dir_url(repo, config)
+
         try:
-            dir_ = _install_repo(repo, config, git_command)
+            _install_repo(repo, config, git_command)
             _fork_and_add_remote(dir_)
         except RepoAlreadyInstalledException as e:
-            print "{t.yellow}{}{t.normal}".format(e.message, t=terminal)
+            print "{t.yellow}{}{t.normal}".format(e, t=terminal)
 
         _create_pth(dir_)
         os.chdir(dir_)
@@ -120,6 +123,6 @@ def _get_code_base_dir():
     return base
 
 
-def get_code_dir(url):
+def _get_code_dir_from_url(url):
     path = re.search(r'git@.*:.*?([^\/]+).git', url).groups()[0]
     return os.path.join(_get_code_base_dir(), path)
