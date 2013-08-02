@@ -2,3 +2,5 @@
 *.pyc
 wheeljack.egg-info/
 dist/
+nosetests.xml
+.tox
