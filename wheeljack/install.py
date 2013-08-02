@@ -68,22 +68,32 @@ def _fork_and_add_remote(dir_):
     print INDENT, "hub fork"
 
 
-def _get_venv_or_create():
+def __virtualenv_cmd(path):
+    return subprocess.check_call(('virtualenv', '-q', path))
+
+
+def _get_venv_or_create(virtualenv_cmd=None):
     """Creates a virtualenv or returns an existing one."""
     venv_path = os.path.join(_get_code_base_dir(), '.venv')
+
+    if not virtualenv_cmd:
+        virtualenv_cmd = __virtualenv_cmd
+
     if not os.path.exists(venv_path):
-        subprocess.check_call(('/usr/local/bin/virtualenv', '-q', venv_path))
+        virtualenv_cmd(venv_path)
     return venv_path
 
 
-def _create_pth(dir_):
+def _create_pth(dir_, virtualenv_cmd=None):
     """Create a pth file which links the virtualenv to this new package."""
-    venv = _get_venv_or_create()
+    venv = _get_venv_or_create(virtualenv_cmd)
     shortname = os.path.basename(dir_)
     pth_file = os.path.join(venv, 'lib/python2.7/site-packages',
                             shortname + '.pth')
     lines = [dir_, "# {} should come before pip'd packages".format(shortname),
-             'import sys;sys.path.insert(0, sys.path.pop(-1));']
+             'import sys;'
+             'sys.path.insert(0, sys.path.pop(-1));'
+             "sys.path.insert(0, '')"]
     with open(pth_file, 'w') as f:
         f.writelines((line + "\n" for line in lines))
 
@@ -115,7 +125,6 @@ def install_repo(repo, config=None, git_command=None):
         print
         print INDENT, "export WHEELJACK_CODE={directory}"
         exit(1)
-
 
 
 def _get_code_base_dir():
