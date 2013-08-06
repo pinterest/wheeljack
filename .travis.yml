@@ -1,15 +1,20 @@
 language: python
+
 python:
   - "2.7"
   - "3.3"
-# command to install dependencies
-install: 
+
+install:
   - "if [[ $TRAVIS_PYTHON_VERSION == '3.3' ]]; then 2to3 -w -n --no-diffs . 2>&1 | tail -n 2; fi"
   - "pip install -r requirements.txt --use-mirrors"
-# command to run tests
-script: 
+
+before_script:
+  - echo $PWD
+
+script:
+
   - nosetests
 
 matrix:
   allow_failures:
-    - python: 3.3
+    - python: "3.3"
