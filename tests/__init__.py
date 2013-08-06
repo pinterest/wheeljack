@@ -18,6 +18,9 @@ repos:
 class TestCase(unittest.TestCase):
     def setUp(self):
         _clear_cache()
+        if '/usr/local/bin' not in os.environ['PATH']:
+            os.environ['PATH'] = ':'.join((os.environ['PATH'],
+                                           '/usr/local/bin'))
         self.tmp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
