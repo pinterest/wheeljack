@@ -38,7 +38,7 @@ def get_config(config):
     else:
         try:
             with open(get_config_filename(), 'r') as stream:
-                __config = yaml.load(stream)
+                __config = yaml.safe_load(stream)
         except IOError:
             raise ReposConfigException("{} could not be opened.".format(
                 get_config_filename()
