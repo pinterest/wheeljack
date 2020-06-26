@@ -1,16 +1,18 @@
+os: linux
+dist: focal
 language: python
 cache: pip
 
 python:
   - "2.7"
-  - "3.3"
+  - "3.8"
 
 before_script:
-  - "if [[ $TRAVIS_PYTHON_VERSION == '3.3' ]]; then 2to3 -w -n --no-diffs . 2>&1 | tail -n 2; fi"
+  - "if [[ $TRAVIS_PYTHON_VERSION == '3.8' ]]; then 2to3 -w -n --no-diffs . 2>&1 | tail -n 2; fi"
 
 script:
   - nosetests
 
-matrix:
+jobs:
   allow_failures:
-    - python: "3.3"
+    - python: "3.8"
