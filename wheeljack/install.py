@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import re
 import subprocess
@@ -62,10 +63,9 @@ def _fork_and_add_remote(dir_):
         raise GitNotRepoException
     if not os.path.exists(os.path.join(dir_, '.git/refs/remotes/origin')):
         raise GitNoOriginRemoteException
-    print terminal.cyan("You may now fork the repository by using hub:")
-    print
-    print INDENT, "cd {}".format(dir_)
-    print INDENT, "hub fork"
+    print(terminal.cyan("You may now fork the repository by using hub:\n"))
+    print(INDENT, "cd {}".format(dir_))
+    print(INDENT, "hub fork")
 
 
 def __virtualenv_cmd(path):
@@ -106,24 +106,24 @@ def install_repo(repo, config=None, git_command=None):
             _install_repo(repo, config, git_command)
             _fork_and_add_remote(dir_)
         except RepoAlreadyInstalledException as e:
-            print "{t.yellow}{}{t.normal}".format(e, t=terminal)
+            print("{t.yellow}{}{t.normal}".format(e, t=terminal))
 
         _create_pth(dir_)
         os.chdir(dir_)
         return dir_
 
     except WheeljackCodeDirectoryMissing:
-        print ("{t.red}Sorry I could not clone {} for you.  "
-               "{} is missing.").format(repo, _get_code_base_dir(), t=terminal)
+        print("{t.red}Sorry I could not clone {} for you.  "
+              "{} is missing.").format(repo, _get_code_base_dir(), t=terminal)
 
-        print "{t.cyan}Create it with:{t.normal}".format(
-            _get_code_base_dir(), t=terminal)
-        print
-        print INDENT, "mkdir {}".format(_get_code_base_dir())
-        print
-        print "{t.cyan}Or override it with:{t.normal}".format(t=terminal)
-        print
-        print INDENT, "export WHEELJACK_CODE={directory}"
+        print("{t.cyan}Create it with:{t.normal}".format(
+            _get_code_base_dir(), t=terminal))
+        print()
+        print(INDENT, "mkdir {}".format(_get_code_base_dir()))
+        print()
+        print("{t.cyan}Or override it with:{t.normal}".format(t=terminal))
+        print()
+        print(INDENT, "export WHEELJACK_CODE={directory}")
         exit(1)
 
 
